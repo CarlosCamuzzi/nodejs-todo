@@ -1,6 +1,12 @@
 const app = require("../../modules/express");
 const UserModel = require("../models/users/user.model");
 
+/*
+const query = { "name": "apples" };
+const cursor = myColl.find(query);
+await cursor.forEach(console.dir);
+*/
+
 // GET ALL
 app.get("/users", async (req, res) => {
   try {
@@ -61,6 +67,20 @@ app.patch("/users/:id", async (req, res) => {
 
     return user === null
       ? res.status(400).json(user)
+      : res.status(200).json(user);
+  } catch (error) {
+    return res.status(500).send(error.message);
+  }
+});
+
+// DELETE
+app.delete("/users/:id", async (req, res) => {
+  try {
+    const id = req.params.id;
+    const user = await UserModel.findByIdAndRemove(id);
+
+    return user === null
+      ? res.status(404).json(user)
       : res.status(200).json(user);
   } catch (error) {
     return res.status(500).send(error.message);
