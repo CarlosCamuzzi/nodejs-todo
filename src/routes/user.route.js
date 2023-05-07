@@ -1,12 +1,6 @@
 const app = require("../../modules/express");
 const UserModel = require("../models/users/user.model");
 
-/*
-const query = { "name": "apples" };
-const cursor = myColl.find(query);
-await cursor.forEach(console.dir);
-*/
-
 // GET ALL
 app.get("/users", async (req, res) => {
   try {

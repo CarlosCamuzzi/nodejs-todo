@@ -8,3 +8,4 @@ connectToDatabase();
 require("./modules/express");
 require("./src/routes/login.route");
 require("./src/routes/user.route");
+require("./src/routes/task.route");

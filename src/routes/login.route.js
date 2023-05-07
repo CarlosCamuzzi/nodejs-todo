@@ -13,8 +13,6 @@ app.post("/users/login", async (req, res) => {
       password: userPassword,
     });
 
-    //console.log(user[0]);
-
     if (user[0] === undefined) {
       console.log("Não foi possível logar, usuário não encontrado");
       return res.status(404).json(user);
@@ -40,11 +38,4 @@ app.post("/users/logout", (req, res) => {
   res.status(200).json({ auth: false, token: null });
 });
 
-// https://github.com/auth0/node-jsonwebtoken
-// https://www.luiztools.com.br/post/autenticacao-json-web-token-jwt-em-nodejs/
-
-// http://artedosdados.blogspot.com/2013/07/rodando-scripts-que-contem-comandos-do.html
-
-//https://www.mongodb.com/docs/mongodb-shell/crud/read/
-
-//  db.users.find({email:'carl@mail.com', password: '123456'}) and
+module.exports = app;
