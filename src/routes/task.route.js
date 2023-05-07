@@ -1,8 +1,9 @@
 const app = require("../../modules/express");
+const verifyJWT = require("../../modules/jwt.verify");
 const TaskModel = require("../models/tasks/task.model");
 
 // GET ALL
-app.get("/tasks", async (req, res) => {
+app.get("/tasks", verifyJWT, async (req, res) => {
   try {
     const task = await TaskModel.find({});
 
@@ -15,7 +16,7 @@ app.get("/tasks", async (req, res) => {
 });
 
 // GET BY ID
-app.get("/tasks/:id", async (req, res) => {
+app.get("/tasks/:id", verifyJWT, async (req, res) => {
   try {
     const id = req.params.id;
     const task = await TaskModel.findById(id);
@@ -29,7 +30,7 @@ app.get("/tasks/:id", async (req, res) => {
 });
 
 // POST
-app.post("/tasks", async (req, res) => {
+app.post("/tasks", verifyJWT, async (req, res) => {
   try {
     const date = new Date();
     req.body.createdDate = new Date();
@@ -44,42 +45,36 @@ app.post("/tasks", async (req, res) => {
 });
 
 // PUT
-app.put("/tasks/:id", async (req, res) => {
+app.put("/tasks/:id", verifyJWT, async (req, res) => {
   try {
     const id = req.params.id;
     const task = await TaskModel.findByIdAndUpdate(id, req.body, { new: true });
 
-    return task === null
-      ? res.status(404).json(task)
-      : res.status(200).json(task); // mudar para no content
+    return task === null ? res.status(404).json(task) : res.status(204);
   } catch (error) {
     res.status(500).send(error.message);
   }
 });
 
 // PATCH
-app.patch("/tasks/:id", async (req, res) => {
+app.patch("/tasks/:id", verifyJWT, async (req, res) => {
   try {
     const id = req.params.id;
     const task = await TaskModel.findByIdAndUpdate(id, req.body, { new: true });
 
-    return task === null
-      ? res.status(404).json(task)
-      : res.status(200).json(task); // mudar para no content
+    return task === null ? res.status(404).json(task) : res.status(204);
   } catch (error) {
     res.status(500).send(error.message);
   }
 });
 
 // DELETE
-app.delete("/tasks/:id", async (req, res) => {
+app.delete("/tasks/:id", verifyJWT, async (req, res) => {
   try {
     const id = req.params.id;
     const task = await TaskModel.findByIdAndRemove(id);
 
-    return task === null
-      ? res.status(404).json(task)
-      : res.status(200).json(task); // mudar para no content
+    return task === null ? res.status(404).json(task) : res.status(200);
   } catch (error) {
     res.status(500).send(error.message);
   }

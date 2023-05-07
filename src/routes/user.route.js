@@ -1,8 +1,9 @@
 const app = require("../../modules/express");
+const verifyJWT = require("../../modules/jwt.verify");
 const UserModel = require("../models/users/user.model");
 
 // GET ALL
-app.get("/users", async (req, res) => {
+app.get("/users", verifyJWT, async (req, res) => {
   try {
     const user = await UserModel.find({});
 
@@ -15,7 +16,7 @@ app.get("/users", async (req, res) => {
 });
 
 // GET BY ID
-app.get("/users/:id", async (req, res) => {
+app.get("/users/:id", verifyJWT, async (req, res) => {
   try {
     const id = req.params.id;
     const user = await UserModel.findById(id);
@@ -42,7 +43,7 @@ app.post("/users", async (req, res) => {
 });
 
 // PUT
-app.put("/users/:id", async (req, res) => {
+app.put("/users/:id", verifyJWT, async (req, res) => {
   try {
     const id = req.params.id;
     const user = await UserModel.findByIdAndUpdate(id, req.body, { new: true });
@@ -54,7 +55,7 @@ app.put("/users/:id", async (req, res) => {
 });
 
 // PATCH
-app.patch("/users/:id", async (req, res) => {
+app.patch("/users/:id", verifyJWT, async (req, res) => {
   try {
     const id = req.params.id;
     const user = await UserModel.findByIdAndUpdate(id, req.body, { new: true });
@@ -68,7 +69,7 @@ app.patch("/users/:id", async (req, res) => {
 });
 
 // DELETE
-app.delete("/users/:id", async (req, res) => {
+app.delete("/users/:id", verifyJWT, async (req, res) => {
   try {
     const id = req.params.id;
     const user = await UserModel.findByIdAndRemove(id);

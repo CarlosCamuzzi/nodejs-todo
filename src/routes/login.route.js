@@ -14,14 +14,15 @@ app.post("/users/login", async (req, res) => {
     });
 
     if (user[0] === undefined) {
-      console.log("Não foi possível logar, usuário não encontrado");
+      console.log("Unable to login, user not found");
+
       return res.status(404).json(user);
     } else {
-      console.log("Usuário encontrado.");
+      console.log("Login ok, user found");
       user.forEach((user) => {
         const id = user.id;
         const token = jwt.sign({ id }, process.env.SECRET, {
-          expiresIn: 300,
+          expiresIn: 600,
         });
 
         console.log(token);
