@@ -5,6 +5,7 @@ const TaskModel = require("../models/tasks/task.model");
 // GET ALL
 app.get("/tasks", verifyJWT, async (req, res) => {
   try {
+    // Pegar o user logado
     const task = await TaskModel.find({});
 
     return task === null

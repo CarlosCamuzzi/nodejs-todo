@@ -13,6 +13,11 @@ app.post("/users/login", async (req, res) => {
       password: userPassword,
     });
 
+    // Fazer a comparação = Obs Refatorar cod
+    // bcrypt.compare(myPlaintextPassword, hash).then(function(result) {
+    //   // result == true
+    //});
+
     if (user[0] === undefined) {
       console.log("Unable to login, user not found");
 
@@ -22,7 +27,7 @@ app.post("/users/login", async (req, res) => {
       user.forEach((user) => {
         const id = user.id;
         const token = jwt.sign({ id }, process.env.SECRET, {
-          expiresIn: 600,
+          expiresIn: 6000,
         });
 
         console.log(token);

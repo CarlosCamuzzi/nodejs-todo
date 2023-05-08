@@ -1,5 +1,6 @@
 const app = require("../../modules/express");
 const verifyJWT = require("../../modules/jwt.verify");
+const bcrypt = require("bcryptjs");
 const UserModel = require("../models/users/user.model");
 
 // GET ALL
@@ -32,12 +33,16 @@ app.get("/users/:id", verifyJWT, async (req, res) => {
 // POST
 app.post("/users", async (req, res) => {
   try {
+    await bcrypt.hash(req.body.password, 10).then((hash) => {
+      req.body.password = hash;
+    });
+
     const user = await UserModel.create(req.body);
 
     return user === null
       ? res.status(400).json(user)
-      : res.status(201).json(user);
-  } catch (error) {
+      : res.status(201).header().json(user);
+  } catch (error) { 
     return res.status(500).send(error.message);
   }
 });

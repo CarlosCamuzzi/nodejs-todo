@@ -1,0 +1,66 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+  /* Suavizar as fontes */
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/*background-color: #2980B9;
+background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25' viewBox='0 0 1600 800'%3E%3Cg stroke='%23FFFFFF' stroke-width='44.5' stroke-opacity='0.07' %3E%3Ccircle fill='%232980B9' cx='0' cy='0' r='1800'/%3E%3Ccircle fill='%232c85bd' cx='0' cy='0' r='1700'/%3E%3Ccircle fill='%232f8ac1' cx='0' cy='0' r='1600'/%3E%3Ccircle fill='%23338fc5' cx='0' cy='0' r='1500'/%3E%3Ccircle fill='%233694c9' cx='0' cy='0' r='1400'/%3E%3Ccircle fill='%233a99cd' cx='0' cy='0' r='1300'/%3E%3Ccircle fill='%233d9dd1' cx='0' cy='0' r='1200'/%3E%3Ccircle fill='%2341a2d5' cx='0' cy='0' r='1100'/%3E%3Ccircle fill='%2345a7d9' cx='0' cy='0' r='1000'/%3E%3Ccircle fill='%2349acdc' cx='0' cy='0' r='900'/%3E%3Ccircle fill='%234db1e0' cx='0' cy='0' r='800'/%3E%3Ccircle fill='%2352b7e4' cx='0' cy='0' r='700'/%3E%3Ccircle fill='%2356bce8' cx='0' cy='0' r='600'/%3E%3Ccircle fill='%235ac1eb' cx='0' cy='0' r='500'/%3E%3Ccircle fill='%235fc6ef' cx='0' cy='0' r='400'/%3E%3Ccircle fill='%2364cbf3' cx='0' cy='0' r='300'/%3E%3Ccircle fill='%2368d0f6' cx='0' cy='0' r='200'/%3E%3Ccircle fill='%236DD5FA' cx='0' cy='0' r='100'/%3E%3C/g%3E%3C/svg%3E");
+background-attachment: fixed;
+background-size: cover;*/
+
+:root {
+  font-size: 62.5%;
+  /* --color-primary: #ED4D1B; */
+  --color-gradient: linear-gradient(to right, #2980b9, #6dd5fa, #ffffff);
+}
+
+body {
+  font-size: 1.6rem;
+  font-family: "Poppins", sans-serif;
+  background: var(--color-gradient);
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* define uma altura para o contêiner pai */
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+label {
+  margin-bottom: 5px;
+}
+
+input {
+  padding: 10px;
+  margin-bottom: 20px;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 300px;
+}
+
+button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #4caf50;
+  color: white;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+button:hover {
+  background-color: #3e8e41;
+}

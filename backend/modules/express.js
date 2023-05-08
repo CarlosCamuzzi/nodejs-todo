@@ -1,12 +1,13 @@
 const express = require("express");
+const cors = require("cors");
 const port = 8080;
 
 const app = express();
-app.use(express.json());
+app.use(express.json(), cors());
 
 // Middleware
 app.use((req, res, next) => {
-  console.log(`Request Type: ${req.method}`);  
+  console.log(`Request Type: ${req.method}`);
   console.log(`Content Type: ${req.headers["content-type"]}`);
   console.log(`Date: ${new Date()}`);
 

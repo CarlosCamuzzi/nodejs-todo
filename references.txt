@@ -1,5 +1,0 @@
-https://github.com/auth0/node-jsonwebtoken
-https://www.luiztools.com.br/post/autenticacao-json-web-token-jwt-em-nodejs/
-http://artedosdados.blogspot.com/2013/07/rodando-scripts-que-contem-comandos-do.html
-https://www.mongodb.com/docs/mongodb-shell/crud/read/
-https://github.com/swagger-api/swagger-node
