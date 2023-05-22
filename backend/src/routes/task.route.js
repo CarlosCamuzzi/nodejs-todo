@@ -2,10 +2,12 @@ const app = require("../../modules/express");
 const verifyJWT = require("../../modules/jwt.verify");
 const TaskModel = require("../models/tasks/task.model");
 
+const authToken = verifyJWT.verifyJWT;
+
 // GET ALL
-app.get("/tasks", verifyJWT, async (req, res) => {
+app.get("/tasks", authToken, async (req, res) => {
   try {
-    // Pegar o user logado
+    // Get User
     const task = await TaskModel.find({});
 
     return task === null
@@ -17,7 +19,7 @@ app.get("/tasks", verifyJWT, async (req, res) => {
 });
 
 // GET BY ID
-app.get("/tasks/:id", verifyJWT, async (req, res) => {
+app.get("/tasks/:id", authToken, async (req, res) => {
   try {
     const id = req.params.id;
     const task = await TaskModel.findById(id);
@@ -31,7 +33,7 @@ app.get("/tasks/:id", verifyJWT, async (req, res) => {
 });
 
 // POST
-app.post("/tasks", verifyJWT, async (req, res) => {
+app.post("/tasks", authToken, async (req, res) => {
   try {
     const date = new Date();
     req.body.createdDate = new Date();
@@ -45,8 +47,8 @@ app.post("/tasks", verifyJWT, async (req, res) => {
   }
 });
 
-// PUT
-app.put("/tasks/:id", verifyJWT, async (req, res) => {
+// PUT - Problem
+app.put("/tasks/:id", async (req, res) => {
   try {
     const id = req.params.id;
     const task = await TaskModel.findByIdAndUpdate(id, req.body, { new: true });
@@ -58,10 +60,11 @@ app.put("/tasks/:id", verifyJWT, async (req, res) => {
 });
 
 // PATCH
-app.patch("/tasks/:id", verifyJWT, async (req, res) => {
+app.patch("/tasks/:id", authToken, async (req, res) => {
   try {
     const id = req.params.id;
     const task = await TaskModel.findByIdAndUpdate(id, req.body, { new: true });
+    console.log("TASK HERE:" + task);
 
     return task === null ? res.status(404).json(task) : res.status(204);
   } catch (error) {
@@ -70,7 +73,7 @@ app.patch("/tasks/:id", verifyJWT, async (req, res) => {
 });
 
 // DELETE
-app.delete("/tasks/:id", verifyJWT, async (req, res) => {
+app.delete("/tasks/:id", authToken, async (req, res) => {
   try {
     const id = req.params.id;
     const task = await TaskModel.findByIdAndRemove(id);

@@ -3,6 +3,8 @@ const jwt = require("jsonwebtoken");
 const verifyJWT = (req, res, next) => {
   const token = req.headers["x-access-token"];
 
+ // console.log("--> " + token);
+
   if (!token)
     return res.status(401).json({ auth: false, message: "No token provided." });
 
@@ -20,4 +22,16 @@ const verifyJWT = (req, res, next) => {
   });
 };
 
-module.exports = verifyJWT;
+// tests
+// const generateJWT = (user) => {
+//   user.forEach((user) => {
+//     const id = user.id;
+//     const token = jwt.sign({ id }, process.env.SECRET, {
+//       expiresIn: 6000,
+//     });
+
+//     return token;
+//   });
+// };
+
+module.exports = { verifyJWT };
