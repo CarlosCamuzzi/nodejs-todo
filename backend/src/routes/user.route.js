@@ -4,7 +4,7 @@ const bcrypt = require("bcryptjs");
 const UserModel = require("../models/users/user.model");
 const linksHATEOAS = require("../links/links.hateoas");
 
-const authToken = verifyJWT.verifyJWT;
+const authToken = verifyJWT;
 
 // GET ALL
 app.get("/users", authToken, async (req, res) => {

@@ -1,8 +1,9 @@
 const app = require("../../modules/express");
 const verifyJWT = require("../../modules/jwt.verify");
 const TaskModel = require("../models/tasks/task.model");
+const linksHATEOAS = require("../links/links.hateoas");
 
-const authToken = verifyJWT.verifyJWT;
+const authToken = verifyJWT;
 
 // GET ALL
 app.get("/tasks", authToken, async (req, res) => {
@@ -23,10 +24,11 @@ app.get("/tasks/:id", authToken, async (req, res) => {
   try {
     const id = req.params.id;
     const task = await TaskModel.findById(id);
+    const hateoas = linksHATEOAS("tasks", id);
 
     return task === null
       ? res.status(404).json(task)
-      : res.status(200).json(task);
+      : res.status(200).json(task, hateoas);
   } catch (error) {
     res.status(500).send(error.message);
   }
@@ -35,25 +37,29 @@ app.get("/tasks/:id", authToken, async (req, res) => {
 // POST
 app.post("/tasks", authToken, async (req, res) => {
   try {
-    const date = new Date();
     req.body.createdDate = new Date();
     const task = await TaskModel.create(req.body);
+    const id = task._id.toString();
+    const hateoas = linksHATEOAS("users", id);
 
     return task === null
-      ? res.status(400).json(task)
-      : res.status(201).json(task);
+      ? res.status(400).json(null)
+      : res.status(201).json(task, hateoas);
   } catch (error) {
     res.status(500).send(error.message);
   }
 });
 
-// PUT - Problem
-app.put("/tasks/:id", async (req, res) => {
+// PUT
+app.put("/tasks/:id", authToken, async (req, res) => {
   try {
     const id = req.params.id;
     const task = await TaskModel.findByIdAndUpdate(id, req.body, { new: true });
+    const hateoas = linksHATEOAS("tasks", id);
 
-    return task === null ? res.status(404).json(task) : res.status(204);
+    return task === null
+      ? res.status(404).json(null)
+      : res.status(200).json(task, hateoas);
   } catch (error) {
     res.status(500).send(error.message);
   }
@@ -64,9 +70,11 @@ app.patch("/tasks/:id", authToken, async (req, res) => {
   try {
     const id = req.params.id;
     const task = await TaskModel.findByIdAndUpdate(id, req.body, { new: true });
-    console.log("TASK HERE:" + task);
+    const hateoas = linksHATEOAS("tasks", id);
 
-    return task === null ? res.status(404).json(task) : res.status(204);
+    return task === null
+      ? res.status(404).json(null)
+      : res.status(200).json(task, hateoas);
   } catch (error) {
     res.status(500).send(error.message);
   }
@@ -78,7 +86,9 @@ app.delete("/tasks/:id", authToken, async (req, res) => {
     const id = req.params.id;
     const task = await TaskModel.findByIdAndRemove(id);
 
-    return task === null ? res.status(404).json(task) : res.status(200);
+    return task === null
+      ? res.status(404).json(null)
+      : res.status(200).json({ Message: "User deleted" });
   } catch (error) {
     res.status(500).send(error.message);
   }
